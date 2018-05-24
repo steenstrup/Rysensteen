@@ -29,35 +29,37 @@
     <p>HEJ MED DIG</p>
     <div id="iframeHolder"></div>
     <div id="iframeHolder2"></div>
+
     <script>
-
-        csv = "heading1,heading2,heading3,heading4,heading5\nvalue1_1,value2_1,value3_1,value4_1,value5_1\nvalue1_2,value2_2,value3_2,value4_2,value5_2";
-
-        document.write('<div>hej</div>');
-        processData(csv);
-
-        function processData(allText) {
-            var allTextLines = allText.split(/\r\n|\n/);
-            var headers = allTextLines[0].split(',');
-            var lines = [];
-
-            for (var i = 1; i < allTextLines.length; i++) {
-                var data = allTextLines[i].split(',');
-                if (data.length == headers.length) {
-                    var tarr = [];
-                    for (var j = 0; j < headers.length; j++) {
-                        document.write(headers[j] + ":" + data[j] + "\n");
-                        tarr.push(headers[j] + ":" + data[j]);
-                    }
-                    lines.push(tarr);
+        $.ajax({
+            type: "GET",
+            url: "Test.csv",
+            dataType: "text",
+            success: function (csv) {
+                var allTextLines = csv.split('\n');
+                var headers = allTextLines[0].split(',');
+                var lines = [];
+                for (var i = 1; i < allTextLines.length; i++) {
+                    var data = allTextLines[i].split(',');
                     
-                }
-            }
-            
-            
-        }
-    </script>
+                    if (data.length == headers.length) {
+                        var tarr = [];
+                        document.write("<p>-------------------------------</p>");
+                        for (var j = 0; j < headers.length; j++) {
 
+                            document.write("<p>" + headers[j] + ":" + data[j] + "</p>");
+                            tarr.push(headers[j] + ":" + data[j]);
+                        }
+                        lines.push(tarr);
+
+                    }
+                }
+            },
+            error: function (request, status, error) {
+                alert(request.responseText);
+            }
+        });
+    </script>
 
 
 </body>
