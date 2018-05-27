@@ -5,62 +5,23 @@
     <title>Rysensteen</title>
 </head>
 <body>
-
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.0/jquery.min.js"></script>
-    <script type="text/javascript" src="read-csv.js"></script>
-    <script type="text/javascript">
-        $(function () {
-            $('#button_show').click(function () {
-                $('#iframeHolder').html('<iframe id="iframe" src="https://www.khanacademy.org/computer-programming/at-4/6577040174940160/embedded?id=1526916358570-0.5230998102726414&amp;origin=http%3A%2F%2Frysensteen.dk&amp;buttons=yes&amp;embed=yes&amp;editor=no&amp;author=yes" width="450" height="450"></iframe>');
-                $('#iframeHolder2').html('<div>HEJ MED DIG</div>');
-            });
-        });
-        $(function () {
-            $('#button_close').click(function () {
-                $('#iframeHolder').html('');
-            });
-        });
-
-    </script>
-
-
-    <button id="button_show">show</button>
-    <button id="button_close">close</button>
-    <p>HEJ MED DIG</p>
-    <div id="iframeHolder"></div>
-    <div id="iframeHolder2"></div>
+    <script type="text/javascript" src="JavaScript.js"></script>
 
     <script>
+        
         $.ajax({
             type: "GET",
             url: "Test.csv",
             dataType: "text",
             success: function (csv) {
-                var allTextLines = csv.split('\n');
-                var headers = allTextLines[0].split(',');
-                var lines = [];
-                for (var i = 1; i < allTextLines.length; i++) {
-                    var data = allTextLines[i].split(',');
-                    
-                    if (data.length == headers.length) {
-                        var tarr = [];
-                        document.write("<p>-------------------------------</p>");
-                        for (var j = 0; j < headers.length; j++) {
-
-                            document.write("<p>" + headers[j] + ":" + data[j] + "</p>");
-                            tarr.push(headers[j] + ":" + data[j]);
-                        }
-                        lines.push(tarr);
-
-                    }
-                }
+                CSVToKhan(csv);
             },
             error: function (request, status, error) {
                 alert(request.responseText);
             }
         });
     </script>
-
 
 </body>
 </html >
